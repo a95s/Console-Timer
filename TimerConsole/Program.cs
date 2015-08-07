@@ -13,12 +13,24 @@ using System.IO;
  * Hotkeys: 1-3: start/stop, 4-6: shift , 7-9: reset.
  * Shifts are stacking.
 */
+/* Есть пара ключевых недостатков на протяжении всего кода:
+1) Имена переменных чудовищно неинформативны
+2) Нет единообразия в оформлении
+3) Странные комментарии
+Недостатки ключевые, потому что код из-за них перестаёт быть читабельным.
+Программист в своей работе пишет код лишь около десяти процентов своего времени, читает код он в семь раз больше
+Если твой код нельзя прочитать как сказку на ночь, ты затормозишь работу всех, кому придётся его читать
+Когда ты будешь работать, у вас в команде скорее всего будут стандарты кодирования, поэтому привыкай к этому заранее
+Очень хорошо об этом пишет Стив Макконел в книге "Совершенный код" */
 namespace TimerConsole
 {
-    class MyTimer : System.Timers.Timer
+    /* Лучше придерживаться концепции "по файлу на класс"
+    Разнесённый по файлам (а лучше по папкам или даже по сборкам) код проще понять
+    Файловая структура обычно наглядно отражает логическую, когда всё в одном файле, связи между классами неочевидны */
+    class MyTimer : System.Timers.Timer 
     {
-        public MyTimer (double interval):base(interval)
-        {
+        public MyTimer (double interval):base(interval) /// оформление
+        { 
             timer1 = new Stopwatch();
             timer2 = new Stopwatch();
             timer3 = new Stopwatch();
@@ -31,7 +43,16 @@ namespace TimerConsole
             shift2 = 0;
             shift3 = 0;
         }
-
+        /*
+        У тебя есть три таймера, для каждого из них есть Stopwatch, Timespan, char и int
+        Всё это можно вынести в отдельную структуру\класс и информативно назвать
+        Тогда из двенадцати строк останется одна public CustomTimer[] timers;
+        */
+        /* 
+        Класс MyTimer нестатический, но все поля в нём статические
+        Статических данных нужно избегать
+        Если хочешь иметь свой класс в единственном экземпляре, используй паттерн Singleton
+        */
         public static Stopwatch timer1;//147Basic
         public static Stopwatch timer2;//285Good
         public static Stopwatch timer3;//396Happiness
@@ -62,9 +83,9 @@ namespace TimerConsole
             Console.WriteLine("396Happiness  {0}:{1:d2} {2}", ts3.Hours * 60 + ts3.Minutes + shift3, ts3.Seconds, enabled3);
 
         }//t_Elapsed
-    }//MyTimer
+    }//MyTimer /// зачем эти комментарии?
 
-    class KeyBoardMoveTracker
+    class KeyBoardMoveTracker ///зачем этот класс?
     {
         //Все что осталось неиспользованным от логгера, но может пригодиться
         //    KeyBoardMoveTracker.UnhookWindowsHookEx(KeyBoardMoveTracker._hookID);
@@ -73,16 +94,16 @@ namespace TimerConsole
     class MyTimerConsole
     {
         //KeyBoardMoveTracker
-        public const int WH_KEYBOARD_LL = 13;
+        public const int WH_KEYBOARD_LL = 13; /// вообще непонятно, что означают имена этих переменных
         public const int WM_KEYDOWN = 0x0100;
         public static LowLevelKeyboardProc _proc = HookCallback;
         public static IntPtr _hookID = IntPtr.Zero;
 
         //Eng-Eng dictionary
-        public static Dictionary<string, string> map = new Dictionary<string, string>
+        public static Dictionary<string, string> map = new Dictionary<string, string> /// чудно, а зачем?
         {
-            {"q","q"},
-            {"w","w"},
+            {"q","q"}, /// как минимум по char можно итерироваться, то есть можно запустить цикл от 'a' до 'z'
+            {"w","w"}, 
             {"e","e"},
             {"r","r"},
             {"t","t"},
@@ -147,18 +168,24 @@ namespace TimerConsole
             t.Elapsed += (sender, e) => MyTimer.t_Elapsed(sender, e);
 
             //Alive all the time
-            GC.KeepAlive(t);
+            GC.KeepAlive(t); /// зачем?
 
             //On
-            t.Enabled = true;
+            t.Enabled = true; 
 
             //KeyBoardMoveTracker
-            _hookID = SetHook(_proc);
+            _hookID = SetHook(_proc); 
             Application.Run();
             //KeyBoardMoveTracker
 
         }//Main
-
+        
+        /* 
+        Хорошей идеей является инкапсулировать низкоуровневый код
+        Взятый откуда-то код так же не стоит копипастить в свой - это чаще всего приведёт к проблемам
+        Вынеси его в отдельный проект, если он идёт библиотекой - возьми библиотеку и добавь в Reference
+        */
+        
         //KeyBoardMoveTracker
         public delegate IntPtr LowLevelKeyboardProc(
         int nCode, IntPtr wParam, IntPtr lParam);
@@ -170,12 +197,17 @@ namespace TimerConsole
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 Keys _key = (Keys)vkCode;
-                String _string = Convert.ToString(_key);
-                _string = _string.ToLower();
+                String _string = Convert.ToString(_key); /// представь, что мама с папой назвали тебя "Человек" или "Сын"
+                _string = _string.ToLower(); /// можно вызов .ToLower() сделать чуть выше
 
                 if (map.ContainsKey(_string) && ApplicationIsActivated())
                 {
                     ch = map[_string][0];
+                    /* 
+                    Этого длиннющего свитча можно было бы избежать, используя события.
+                    В C# есть их языковая поддержка в виде ключевого слова event
+                    У тебя очень много дублирующегося кода в кейсах, это bad design
+                    */
                     switch (ch)
                     {
                         //1-3 Start/stop timers
