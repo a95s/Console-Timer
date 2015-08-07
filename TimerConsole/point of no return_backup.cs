@@ -1,4 +1,7 @@
-﻿using System;
+/*
+Бэкапы копипастом - это неудобно, осваивай Git, он больше, чем просто хранилище кода
+*/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
