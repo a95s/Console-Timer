@@ -17,7 +17,8 @@ namespace TimerConsole
 {
     class MyTimer : System.Timers.Timer
     {
-        public MyTimer (double interval):base(interval)
+        public MyTimer(double interval)
+            : base(interval)
         {
             timer1 = new Stopwatch();
             timer2 = new Stopwatch();
@@ -50,7 +51,7 @@ namespace TimerConsole
 
         public static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Console.Clear();            
+            Console.Clear();
 
             ts1 = timer1.Elapsed;
             ts2 = timer2.Elapsed;
@@ -77,7 +78,7 @@ namespace TimerConsole
             int temp;
 
             //Initializing timer with 1 second timeout
-            MyTimer t = new MyTimer (1000);
+            MyTimer t = new MyTimer(1000);
 
             //Hook up method to the event
             t.Elapsed += (sender, e) => MyTimer.t_Elapsed(sender, e);

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerConsole", "TimerConsole\TimerConsole.csproj", "{211B5697-8C5F-4ACB-9C70-68FDA52E206F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1.csproj", "{BA8EE0A9-EBE0-4F4D-887B-91BCCE1992FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{211B5697-8C5F-4ACB-9C70-68FDA52E206F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{211B5697-8C5F-4ACB-9C70-68FDA52E206F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{211B5697-8C5F-4ACB-9C70-68FDA52E206F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{211B5697-8C5F-4ACB-9C70-68FDA52E206F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA8EE0A9-EBE0-4F4D-887B-91BCCE1992FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA8EE0A9-EBE0-4F4D-887B-91BCCE1992FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA8EE0A9-EBE0-4F4D-887B-91BCCE1992FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA8EE0A9-EBE0-4F4D-887B-91BCCE1992FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
