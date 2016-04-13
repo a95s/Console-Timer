@@ -58,9 +58,9 @@ namespace TimerConsole
             ts3 = timer3.Elapsed;
 
             //Output
-            Console.WriteLine("147Basic      {0}:{1:d2} {2}", ts1.Hours * 60 + ts1.Minutes + shift1, ts1.Seconds, enabled1);
-            Console.WriteLine("285Good       {0}:{1:d2} {2}", ts2.Hours * 60 + ts2.Minutes + shift2, ts2.Seconds, enabled2);
-            Console.WriteLine("396Happiness  {0}:{1:d2} {2}", ts3.Hours * 60 + ts3.Minutes + shift3, ts3.Seconds, enabled3);
+            Console.WriteLine("147Basic      {0}:{1:d2} {2}", ts1.Days * 1440 + ts1.Hours * 60 + ts1.Minutes + shift1, ts1.Seconds, enabled1);
+            Console.WriteLine("285Good       {0}:{1:d2} {2}", ts2.Days * 1440 + ts2.Hours * 60 + ts2.Minutes + shift2, ts2.Seconds, enabled2);
+            Console.WriteLine("396Happiness  {0}:{1:d2} {2}", ts3.Days * 1440 + ts3.Hours * 60 + ts3.Minutes + shift3, ts3.Seconds, enabled3);
 
         }//t_Elapsed
     }//MyTimer
