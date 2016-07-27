@@ -1,4 +1,4 @@
-## Stopwatch app
+## Desktop stopwatch app
 Three timers - Basic, Good, Happiness. 
 
 7 8 9 - clear (shift clears too)  
