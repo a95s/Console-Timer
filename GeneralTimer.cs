@@ -14,7 +14,7 @@ namespace TimerConsole
             : base(interval)
         {
             customTimers = new CustomTimer[4] { new CustomTimer("147Box"), 
-                                                new CustomTimer("258Rest"), 
+                                                new CustomTimer("258UseMethods"), 
                                                 new CustomTimer("369Other1"),
                                                 new CustomTimer("/*-Other2") };
         }
@@ -31,9 +31,9 @@ namespace TimerConsole
             //Output
             for (int i = 0; i < customTimers.Length; i++)
             {
-                Console.WriteLine("{0,11} {1}:{2:d2} {3}",
+                Console.WriteLine("{0,15} {1}:{2:d2} {3}",
                     customTimers[i].name,
-                    customTimers[i].timeSpan.Days * 1440 + customTimers[i].timeSpan.Hours * 60 + customTimers[i].timeSpan.Minutes + (customTimers[i].shift.Days * 1440 + customTimers[i].shift.Hours * 60 + customTimers[i].shift.Minutes),
+                    (int)(customTimers[i].timeSpan.TotalMinutes + customTimers[i].shift.TotalMinutes),
                     customTimers[i].timeSpan.Seconds + customTimers[i].shift.Seconds,
                     customTimers[i].enabled);
             }
