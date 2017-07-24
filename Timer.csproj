@@ -48,6 +48,7 @@
     <Compile Include="GeneralTimer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="LoadAndSave.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

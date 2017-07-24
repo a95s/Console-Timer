@@ -17,18 +17,18 @@ namespace TimerConsole
         {
             #region Set up
             // Setting size and position of the window
-            Console.SetWindowSize(24, 8);
+            Console.SetWindowSize(25, 8);
             Console.SetWindowPosition(0, 0);
 
             // Character for instruction and parsing
             char ch;
-            int temp;
 
-            // Initializing timer with 1 second timeout
+            // Initializing timer with 1 second timeout and load data
             GeneralTimer t = new GeneralTimer(1000);
+            LoadAndSave.Load(t);
 
             // Hook up method to the event
-            t.Elapsed += (sender, e) => GeneralTimer.t_Elapsed(sender, e);
+            t.Elapsed += (sender, e) => t.t_Elapsed(sender, e);
 
             // Alive all the time
             GC.KeepAlive(t);
@@ -47,42 +47,42 @@ namespace TimerConsole
                     // 4-6 and "*" Set additional shift to timers (they're stacking)
 
                     case '1':
-                        StartOrStopTimer(0);
+                        t.StartOrStopTimer(0);
                         break;
                     case '2':
-                        StartOrStopTimer(1);
+                        t.StartOrStopTimer(1);
                         break;
                     case '3':
-                        StartOrStopTimer(2);
+                        t.StartOrStopTimer(2);
                         break;
                     case '/':
-                        StartOrStopTimer(3);
+                        t.StartOrStopTimer(3);
                         break;
 
                     case '7':
-                        ResetTimer(0);
+                        t.ResetTimer(0);
                         break;
                     case '8':
-                        ResetTimer(1);
+                        t.ResetTimer(1);
                         break;
                     case '9':
-                        ResetTimer(2);
+                        t.ResetTimer(2);
                         break;
                     case '-':
-                        ResetTimer(3);
+                        t.ResetTimer(3);
                         break;
 
                     case '4':
-                        AddShiftToTimer(t, 0);
+                        t.AddShiftToTimer(0);
                         break;
                     case '5':
-                        AddShiftToTimer(t, 1);
+                        t.AddShiftToTimer(1);
                         break;
                     case '6':
-                        AddShiftToTimer(t, 2);
+                        t.AddShiftToTimer(2);
                         break;
                     case '*':
-                        AddShiftToTimer(t, 3);
+                        t.AddShiftToTimer(3);
                         break;
 
                     //Retrieve snapshot
@@ -93,11 +93,11 @@ namespace TimerConsole
                         string s = Console.ReadLine();
                         if (s == "y")
                         {
-                            for (int i = 0; i < GeneralTimer.customTimers.Length; i++)
+                            for (int i = 0; i < t.customTimers.Length; i++)
                             {
-                                GeneralTimer.customTimers[i].timer.Reset();
-                                GeneralTimer.customTimers[i].enabled = ' ';
-                                GeneralTimer.customTimers[i].shift += GeneralTimer.customTimers[i].snapshot;
+                                t.customTimers[i].timer.Reset();
+                                t.customTimers[i].enabled = ' ';
+                                t.customTimers[i].shift += t.customTimers[i].snapshot;
                             }
                         }
                         t.Start();
@@ -106,57 +106,6 @@ namespace TimerConsole
             }// while
             #endregion
         }// Main
-        //TODO try decrease these long names
-        static void StartOrStopTimer(int timerIndex)
-        {
-            if (GeneralTimer.customTimers[timerIndex].timer.IsRunning)
-            {
-                GeneralTimer.customTimers[timerIndex].timer.Stop();
-                GeneralTimer.customTimers[timerIndex].enabled = ' ';
-                GeneralTimer.customTimers[timerIndex].snapshot = GeneralTimer.customTimers[timerIndex].timer.Elapsed;
-            }
-            else
-            {
-                GeneralTimer.customTimers[timerIndex].timer.Start();
-                GeneralTimer.customTimers[timerIndex].enabled = '*';
-                GeneralTimer.customTimers[timerIndex].snapshot = GeneralTimer.customTimers[timerIndex].timer.Elapsed;
-            }
-        }
-        static void ResetTimer(int timerIndex)
-        {
-            GeneralTimer.customTimers[timerIndex].timer.Reset();
-            GeneralTimer.customTimers[timerIndex].enabled = ' ';
-            GeneralTimer.customTimers[timerIndex].shift = new TimeSpan();
-        }
-        static void AddShiftToTimer(GeneralTimer t, int timerIndex)
-        {
-            int temp;
-            t.Stop();
-            Console.Clear();
-            Console.WriteLine("Shift " + GeneralTimer.customTimers[timerIndex].name.Substring(3));
-            Int32.TryParse(Console.ReadLine(), out temp);
-            if (temp >= 0)
-                GeneralTimer.customTimers[timerIndex].shift = GeneralTimer.customTimers[timerIndex].shift.Add(new TimeSpan(0, temp, 0));
-            else
-                GeneralTimer.customTimers[timerIndex].shift = GeneralTimer.customTimers[timerIndex].shift.Subtract(new TimeSpan(0, (-1) * temp, 0));
-            t.Start();
-        }
-        static void RetrieveSnapshot(GeneralTimer t)
-        {
-            t.Stop();
-            Console.Clear();
-            Console.WriteLine("Rewind to snapshot?(y/n)");
-            string s = Console.ReadLine();
-            if (s == "y")
-            {
-                for (int i = 0; i < GeneralTimer.customTimers.Length; i++)
-                {
-                    GeneralTimer.customTimers[i].timer.Reset();
-                    GeneralTimer.customTimers[i].enabled = ' ';
-                    GeneralTimer.customTimers[i].shift += GeneralTimer.customTimers[i].snapshot;
-                }
-            }
-            t.Start();
-        }
+        
     }// MyTimerConsole
 }// namespace
