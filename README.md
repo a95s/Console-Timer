@@ -1,4 +1,4 @@
-# Console stopwatch
+# Console Timer
 It has three timers.
 
 7 8 9 - clear (shift are cleared too)  
