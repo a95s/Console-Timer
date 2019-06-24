@@ -42,65 +42,48 @@ namespace TimerConsole
                 ch = Console.ReadKey().KeyChar;
                 switch (ch)
                 {
-                    // 1-3 and "/" Start/stop timers
-                    // 7-9 and "-" Reset specified timer
-                    // 4-6 and "*" Set additional shift to timers (they're stacking)
-
                     case '1':
                         t.StartOrStopTimer(0);
                         break;
-                    case '2':
+                    case '4':
                         t.StartOrStopTimer(1);
                         break;
-                    case '3':
+                    case '7':
                         t.StartOrStopTimer(2);
                         break;
-                    case '/':
+                    case '0':
                         t.StartOrStopTimer(3);
                         break;
 
-                    case '7':
+                    case '3':
                         t.ResetTimer(0);
                         break;
-                    case '8':
+                    case '6':
                         t.ResetTimer(1);
                         break;
                     case '9':
                         t.ResetTimer(2);
                         break;
-                    case '-':
+                    case '=':
                         t.ResetTimer(3);
                         break;
 
-                    case '4':
+                    case '2':
                         t.AddShiftToTimer(0);
                         break;
                     case '5':
                         t.AddShiftToTimer(1);
                         break;
-                    case '6':
+                    case '8':
                         t.AddShiftToTimer(2);
                         break;
-                    case '*':
+                    case '-':
                         t.AddShiftToTimer(3);
                         break;
 
                     //Retrieve snapshot
-                    case '0':
-                        t.Stop();
-                        Console.Clear();
-                        Console.WriteLine("Rewind to snapshot?(y/n)");
-                        string s = Console.ReadLine();
-                        if (s == "y")
-                        {
-                            for (int i = 0; i < t.customTimers.Length; i++)
-                            {
-                                t.customTimers[i].timer.Reset();
-                                t.customTimers[i].enabled = ' ';
-                                t.customTimers[i].shift += t.customTimers[i].snapshot;
-                            }
-                        }
-                        t.Start();
+                    case '`':
+                        t.RetrieveSnapshot();
                         break;
                 }// case
             }// while

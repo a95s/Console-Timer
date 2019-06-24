@@ -8,6 +8,7 @@ namespace TimerConsole
 {
     public static class LoadAndSave
     {
+        static bool Saving = false;
         static string path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\TimerConsole";
         static string fileName = "data.txt";
         
@@ -18,7 +19,16 @@ namespace TimerConsole
             if (!File.Exists(path + "\\" + fileName))
                 return;
             StreamReader sr = new StreamReader(path + "\\" + fileName);
-            string[] lines = sr.ReadToEnd().Split(new string[1]{"\r\n"}, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = new string[1];
+            try
+            {
+                lines = sr.ReadToEnd().Split(new string[1] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("File is used by someone");
+            }
+            
             loadHere.ResetInnerTimers();
             if(lines.Length != loadHere.customTimers.Length)
             {
@@ -38,12 +48,24 @@ namespace TimerConsole
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            StreamWriter sw = new StreamWriter(path + "\\" + fileName);
-            for(int i = 0; i < saveThis.customTimers.Length; ++i)
+            if (!Saving)
             {
-                sw.Write((int)(saveThis.customTimers[i].timeSpan.TotalMinutes + saveThis.customTimers[i].shift.TotalMinutes) + "\r\n");
+                Saving = true;
+                StreamWriter sw = new StreamWriter(path + "\\" + fileName);
+                for (int i = 0; i < saveThis.customTimers.Length; ++i)
+                {
+                    try
+                    {
+                        sw.Write((int)(saveThis.customTimers[i].timeSpan.TotalMinutes + saveThis.customTimers[i].shift.TotalMinutes) + "\r\n");
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("File is used by someone");
+                    }
+                }
+                sw.Close();
+                Saving = false;
             }
-            sw.Close();
         }
     }
 }
