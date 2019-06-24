@@ -1,9 +1,9 @@
 # Console Timer
-It has three timers.
+It has four timers.
 
-7 8 9 - clear (shift are cleared too)  
-4 5 6 - add a shift (shifts are stackable)  
-1 2 3 - start/stop the corresponding timer  
+3 6 9 = : clear (shift are cleared too)  
+2 5 8 - : add a shift (shifts are stackable)  
+1 4 7 0 : start/stop the corresponding timer  
 
 Timers are implemented with System.Diagnostics.Stopwatch, so if the timer is started, it will continue counting even when computer is in sleep mode.
 
