@@ -1,7 +1,7 @@
 # Console Timer
 It has four timers.
 
-3 6 9 = : clear (shift are cleared too)  
+3 6 9 = : clear (shifts are cleared too)  
 2 5 8 - : add a shift (shifts are stackable)  
 1 4 7 0 : start/stop the corresponding timer  
 
