@@ -12,6 +12,7 @@ namespace TimerConsole
         public int saveCounter;
         public int timesRecorded;
         public DateTime lastEdited = new DateTime(2000,1,1);
+        public string outputString;
 
         public GeneralTimer(double interval)
             : base(interval)
@@ -38,9 +39,9 @@ namespace TimerConsole
 
         public void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            Console.Clear();
+            outputString = "";
             saveCounter++;
-            if (saveCounter > 60)
+            if (saveCounter > 300)
             {
                 LoadAndSave.Save(this);
                 saveCounter = 0;
@@ -54,13 +55,14 @@ namespace TimerConsole
             //Output
             for (int i = 0; i < customTimers.Length; i++)
             {
-                Console.WriteLine("{0,10} {1}:{2:d2} {3}",
+                outputString += String.Format("{0,10} {1}:{2:d2} {3}\r\n",
                     customTimers[i].name,
                     (int)(customTimers[i].timeSpan.TotalMinutes + customTimers[i].shift.TotalMinutes),
                     customTimers[i].timeSpan.Seconds,
                     customTimers[i].enabled);
             }
-            Console.WriteLine("Records: {0}", timesRecorded);
+            outputString += String.Format("Records: {0}\r\n", timesRecorded);
+            Console.WriteLine(outputString);
         }
 
         public void ResetTimer(int timerIndex)

@@ -16,15 +16,15 @@ namespace TimerConsole
         static void Main(string[] args)
         {
             #region Set up
-            // Setting size and position of the window
+            // Set size and position of the window
             Console.SetWindowSize(25, 8);
             Console.SetWindowPosition(0, 0);
 
             // Character for instruction and parsing
             char ch;
 
-            // Initializing timer with 1 second timeout and load data
-            GeneralTimer t = new GeneralTimer(1000);
+            // Initialize timer with a 200ms timeout and load data
+            GeneralTimer t = new GeneralTimer(200);
             LoadAndSave.Load(t);
 
             // Hook up method to the event
