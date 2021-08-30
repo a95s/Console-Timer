@@ -17,7 +17,7 @@ namespace TimerConsole
         {
             #region Set up
             // Set size and position of the window
-            Console.SetWindowSize(25, 8);
+            Console.SetWindowSize(25, 7);
             Console.SetWindowPosition(0, 0);
 
             // Character for instruction and parsing
