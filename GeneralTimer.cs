@@ -62,6 +62,7 @@ namespace TimerConsole
                     customTimers[i].enabled);
             }
             outputString += String.Format("Records: {0}\r\n", timesRecorded);
+            Console.Clear();
             Console.WriteLine(outputString);
         }
 
